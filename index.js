@@ -30,8 +30,15 @@ async function run() {
     // Send a ping to confirm a successful connection
     const Assignment = client.db("Assignment").collection('data')
     app.get('/data',async(req ,res)=>{
-      
-      const cursor =Assignment.find();
+      // data filltaring
+      let queryObj = {};
+      const level = req . query.level;
+
+   if(level){
+      queryObj.level = level;
+   }
+
+      const cursor =Assignment.find(queryObj);
       const result = await cursor.toArray();
       res.send(result);
     })
